@@ -29,7 +29,7 @@ let player = {
 
 // Initialize Socket.io connection
 function initSocket() {
-  socket = io('https://your-backend-url.railway.app'); // Replace with your backend URL
+  socket = io('inlinegames-production-843a.up.railway.app'); // Replace with your backend URL
 
   socket.on('connect', () => {
     player.id = socket.id;
