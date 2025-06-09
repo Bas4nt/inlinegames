@@ -1,4 +1,4 @@
-const socket = io("https://your-backend-url.up.railway.app"); // replace with Railway backend URL
+const socket = io("inlinegames-production-843a.up.railway.app"); // replace with Railway backend URL
 const canvas = document.getElementById("board");
 const ctx = canvas.getContext("2d");
 
