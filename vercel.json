@@ -4,7 +4,7 @@
     "rewrites": [
       {
         "source": "/socket.io/(.*)",
-        "destination": "https://sketchverse-backend.railway.app/socket.io/$1"
+        "destination": "inlinegames-production-843a.up.railway.app/socket.io/$"
       },
       {
         "source": "/(.*)",
