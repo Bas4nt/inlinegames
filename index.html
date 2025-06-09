@@ -1,15 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mini Scribble Game</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SketchVerse | Multiplayer Drawing Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --background: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text: #2D3748;
+            --pastel-blue: #A0E7E5;
+            --pastel-pink: #FFAEBC;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        
+        .canvas-container {
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: white;
+            overflow: hidden;
+        }
+        
+        /* Additional CSS for responsive design */
+        /* responsive.css */
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+    }
+    
+    .canvas-container {
+        width: 100%;
+        height: 60vh;
+    }
+    
+    .chat-container {
+        width: 100%;
+        height: 30vh;
+    }
+    
+    .toolbar {
+        flex-wrap: wrap;
+    }
+    
+    .tool-button {
+        width: 40px;
+        height: 40px;
+        margin: 4px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #1A202C;
+        --card-bg: #2D3748;
+        --text: #E2E8F0;
+    }
+}
+    </style>
 </head>
 <body>
-  <h1>Scribble Game</h1>
-  <canvas id="board" width="800" height="600"></canvas>
-  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-  <script src="script.js"></script>
+    <div id="app">
+        <!-- Dynamic content loaded via JavaScript -->
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+    <!-- At the end of your <body> tag -->
+<script src="/socket.io/socket.io.js"></script> <!-- Socket.io client library -->
+<script src="/js/utils.js"></script>
+<script src="/js/socket.js"></script>
+<script src="/js/lobby.js"></script>
+<script src="/js/canvas.js"></script>
+<script src="/js/chat.js"></script>
+<script src="/js/game.js"></script>
+<script src="/js/main.js"></script> <!-- Should be last -->
 </body>
 </html>

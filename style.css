@@ -1,13 +1,31 @@
 body {
+    font-family: Arial;
     text-align: center;
-    background-color: #f5f5f5;
-    font-family: sans-serif;
+    background: #f9f9f9;
   }
-  
   canvas {
-    border: 2px solid #333;
-    margin-top: 20px;
-    background-color: white;
-    cursor: crosshair;
+    border: 2px solid #000;
+    background: #fff;
+  }
+  .lobby input, .chatbox input {
+    padding: 10px;
+    margin: 5px;
+  }
+  button {
+    padding: 10px;
+    margin: 5px;
+  }
+  #players {
+    margin: 10px;
+  }
+  .chatbox {
+    margin-top: 10px;
+  }
+  #chat {
+    height: 150px;
+    overflow-y: scroll;
+    background: #eee;
+    padding: 10px;
+    margin: 10px;
   }
   

@@ -1,0 +1,11 @@
+{
+    "environments": {
+      "production": {
+        "env": {
+          "NODE_ENV": "production",
+          "PORT": "3001",
+          "TELEGRAM_TOKEN": "@sketchverse-telegram-token"
+        }
+      }
+    }
+  }

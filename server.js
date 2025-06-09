@@ -1,30 +1,43 @@
-const express = require("express");
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
+// server.js
+const express = require('express');
+const socketio = require('socket.io');
+const http = require('http');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "*", // Allow all origins (or restrict to Vercel URL)
-    methods: ["GET", "POST"]
-  }
+const io = socketio(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
 });
 
-app.use(cors());
+// Game state management
+const rooms = new Map();
 
-io.on("connection", (socket) => {
-  console.log("🟢 A user connected:", socket.id);
-
-  socket.on("draw", (data) => {
-    socket.broadcast.emit("draw", data); // Send to all other clients
-  });
-
-  socket.on("disconnect", () => {
-    console.log("🔴 A user disconnected:", socket.id);
-  });
+io.on('connection', (socket) => {
+    console.log(`New connection: ${socket.id}`);
+    
+    socket.on('joinRoom', ({ roomId, username }) => {
+        // Room joining logic
+    });
+    
+    socket.on('draw', (data) => {
+        // Broadcast drawing to all room members
+        socket.to(data.roomId).emit('drawing', data);
+    });
+    
+    socket.on('message', (message) => {
+        // Handle chat messages and scoring
+    });
+    // In server.js
+socket.on('draw', (data) => { /* ... */ });
+socket.on('chatMessage', (data) => { /* ... */ });
+    
+    // Additional event handlers
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(process.env.PORT || 3001, () => {
+    console.log(`Server running on port ${process.env.PORT || 3001}`);
+});
