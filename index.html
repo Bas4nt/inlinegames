@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skribbl.io Clone</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #game-area { margin: 20px; }
+        #canvas { border: 2px solid black; background: white; }
+        #word-display { font-size: 24px; margin: 10px; }
+        #chat-box { width: 300px; height: 200px; border: 1px solid #ccc; margin: 10px auto; overflow-y: scroll; text-align: left; padding: 5px; }
+        #message-input { width: 250px; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Skribbl.io Clone</h1>
+    <div id="game-area">
+        <canvas id="canvas" width="500" height="400"></canvas>
+        <div id="word-display">Waiting for word...</div>
+        <div id="chat-box"></div>
+        <input type="text" id="message-input" placeholder="Type your guess...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+
+        // Drawing logic
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'black';
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+            
+            // Send drawing data to server
+            socket.emit('draw', { x: e.offsetX, y: e.offsetY });
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        // Chat and word logic
+        function sendMessage() {
+            const message = document.getElementById('message-input').value;
+            socket.emit('chat', message);
+            document.getElementById('message-input').value = '';
+        }
+
+        // Listen for updates from server
+        socket.on('update', (data) => {
+            document.getElementById('word-display').textContent = data.word || 'Waiting for word...';
+            document.getElementById('chat-box').innerHTML += `<p>${data.message || ''}</p>`;
+        });
+
+        socket.on('drawing', (data) => {
+            ctx.lineTo(data.x, data.y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(data.x, data.y);
+        });
+    </script>
+</body>
+</html>
